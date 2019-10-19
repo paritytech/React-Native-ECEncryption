@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RNECEncryption"
-  s.version      = "1.0.0"
+  s.version      = "1.0.2"
   s.summary      = "RNECEncryption"
   s.description  = <<-DESC
                   RNECEncryption
