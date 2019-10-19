@@ -1,6 +1,6 @@
 
 # React-Native-EC-Encryption
-[![npm version](https://badge.fury.io/js/react-native-ecencryption.svg)](https://badge.fury.io/js/react-native-ecencryption)
+[![npm version](https://badge.fury.io/js/react-native-ec-encryption.svg)](https://badge.fury.io/js/react-native-ec-encryption)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 ## Description
 
@@ -20,16 +20,16 @@ Algorithm used: [ECIES_P256_HKDF_HMAC_SHA256_AES128_CTR_HMAC_SHA256](https://goo
 
 ## Getting started
 
-`$ npm install react-native-ecencryption --save`
+`$ npm install react-native-ec-encryption --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-ecencryption`
+`$ react-native link react-native-ec-encryption`
 
 ## Usage
 
 ```javascript
-import ECEncryption from 'react-native-ecencryption';
+import ECEncryption from 'react-native-ec-encryption';
 
 const encryptAndThenDecrypt = async () => {
   try {
