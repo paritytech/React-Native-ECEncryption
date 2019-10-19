@@ -1,6 +1,6 @@
 
 import { NativeModules } from 'react-native';
 
-const { RNReactNativeEcEncryption } = NativeModules;
+const { RNECEncryption } = NativeModules;
 
-export default RNReactNativeEcEncryption;
+export default RNECEncryption;
