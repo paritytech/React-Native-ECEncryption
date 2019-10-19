@@ -22,9 +22,7 @@ Algorithm used: [ECIES_P256_HKDF_HMAC_SHA256_AES128_CTR_HMAC_SHA256](https://goo
 
 `$ npm install react-native-ec-encryption --save`
 
-### Mostly automatic installation
-
-`$ react-native link react-native-ec-encryption`
+And it will automatically linked.
 
 ## Usage
 
