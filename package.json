@@ -1,6 +1,6 @@
 {
   "name": "react-native-ec-encryption",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "A hardware-backed encryption and decryption library for React Native",
   "main": "index.js",
   "scripts": {
@@ -20,10 +20,13 @@
   ],
   "author": "hanwencheng",
   "license": "gpl-3.0",
+  "readmeFilename": "README.md",
   "peerDependencies": {
-    "react-native": "^0.60.5"
+    "react": "^16.8.1",
+    "react-native": ">=0.59.0-rc.0 <1.0.x"
   },
   "devDependencies": {
-    "react-native": "^0.60.5"
+    "react": "^16.8.3",
+    "react-native": "^0.59.10"
   }
 }

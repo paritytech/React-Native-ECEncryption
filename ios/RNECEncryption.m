@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "RNECEncryption.h"
+#import "RnecEncryption.h"
 
 #import <Foundation/Foundation.h>
 #import <React/RCTUtils.h>
@@ -27,7 +27,7 @@ static BOOL isSimulator = YES;
 static BOOL isSimulator = NO;
 #endif
 
-@implementation RNECEncryption
+@implementation RnecEncryption
 
 RCT_EXPORT_MODULE();
 
@@ -43,20 +43,20 @@ RCT_EXPORT_MODULE();
                                                 kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
                                                 kSecAccessControlUserPresence | kSecAccessControlPrivateKeyUsage,
                                                 &sacErr);
-    
+
     if (sacErr) {
         *errMsg = [(__bridge NSError *)sacErr description];
         return nil;
     }
-    
+
     // Create parameters dictionary for key generation.
     NSString* uuid = [options valueForKey:@"label"];
-    
+
     if(uuid == nil) {
         uuid = [self uuidString];
     }
     NSString* publicKeyTag = [self toPublicIdentifier:uuid];
-    
+
     NSMutableDictionary *privateKeyAttrs = [NSMutableDictionary dictionaryWithDictionary: @{
                                                                                             (__bridge id)kSecAttrIsPermanent: @YES,
                                                                                             (__bridge id)kSecAttrApplicationTag: uuid,
@@ -84,9 +84,9 @@ RCT_EXPORT_MODULE();
         *errMsg = [CFBridgingRelease(error) description];  // ARC takes ownership
         return nil;
     }
-    
+
     SecKeyRef publicKey = SecKeyCopyPublicKey(privateKey);
-    
+
     // Save public Key
     OSStatus status = SecItemAdd((__bridge CFDictionaryRef)@{
                                                              (__bridge id)kSecClass: (__bridge id)kSecClassKey,
@@ -94,14 +94,14 @@ RCT_EXPORT_MODULE();
                                                              (__bridge id)kSecAttrApplicationTag: publicKeyTag,
                                                              (__bridge id)kSecValueRef: (__bridge id)publicKey
                                                              }, nil);
-    
+
     if (status != errSecSuccess) {
         CFRelease(privateKey);
         CFRelease(publicKey);
         *errMsg = keychainStatusToString(status);
         return nil;
     }
-    
+
     CFRelease(privateKey);
     return publicKey;
 }
@@ -162,7 +162,7 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
             reject(@"RNECEncryption", errMsg, ecencryptionMakeError(errMsg));
             return;
         }
-        
+
         NSString* base64cipherText = [cipherText base64EncodedStringWithOptions:0];
         resolve(base64cipherText);
     });
@@ -172,10 +172,10 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
              errMsg:(NSString **) errMsg
 {
     SecKeyRef publicKeyRef = [self getOrGenerateNewPublicKeyRef:options errMsg: errMsg];
-    
+
     if(!publicKeyRef)
         return nil;
-    
+
     BOOL canEncrypt = SecKeyIsAlgorithmSupported(publicKeyRef,
                                                  kSecKeyOperationTypeEncrypt,
                                                  encryptAlgorithm);
@@ -197,7 +197,7 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
         *errMsg = [CFBridgingRelease(error) description];  // ARC takes ownership
         return nil;
     }
-    
+
     CFRelease(publicKeyRef);
     return cipherText;
 }
@@ -206,11 +206,11 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
                                     errMsg:(NSString **)errMsg
 {
     NSString* keyPairTag = [options valueForKey:@"label"];
-    
+
     SecKeyRef publicKeyRef = [self getPublicKeyRef:[self toPublicIdentifier:keyPairTag] errMsg:errMsg];
     if (!publicKeyRef) {
         publicKeyRef = [self generateECPair:options errMsg:errMsg];
-        
+
         if (!publicKeyRef)
             return nil;
     }
@@ -225,11 +225,11 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
                                          (__bridge id)kSecAttrApplicationTag: privateKeyTag,
                                          (__bridge id)kSecReturnRef:  @YES,
                                          };
-    
+
     SecKeyRef privateKeyRef = NULL;
     OSStatus statusGetPrivateKey = SecItemCopyMatching((__bridge CFDictionaryRef)getPrivateKeyQuery,
                                                        (CFTypeRef *)&privateKeyRef);
-    
+
     if (statusGetPrivateKey!=errSecSuccess) {
         *errMsg = keychainStatusToString(statusGetPrivateKey);
         //Is the SecKeyRef now still NULL? Need CFRelease the SecKeyRef?
@@ -239,7 +239,7 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
         *errMsg = @"can't find public key";
         return nil;
     }
-    
+
     return privateKeyRef;
 }
 
@@ -252,7 +252,7 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
                                         (__bridge id)kSecReturnRef:  @YES,
                                         };
     SecKeyRef publicKeyRef = NULL;
-    
+
     OSStatus statusGetPublicKey = SecItemCopyMatching((__bridge CFDictionaryRef)getPublicKeyQuery,
                                                       (CFTypeRef *)&publicKeyRef);
     if (statusGetPublicKey != errSecSuccess) {
@@ -264,35 +264,35 @@ RCT_EXPORT_METHOD(encrypt:(nonnull NSDictionary *)options
         *errMsg = @"can't find public key";
         return nil;
     }
-    
+
     return publicKeyRef;
 }
 
 NSString *keychainStatusToString(OSStatus status) {
     NSString *message = [NSString stringWithFormat:@"%ld", (long)status];
-    
+
     switch (status) {
         case errSecSuccess:
             message = @"success";
             break;
-            
+
         case errSecDuplicateItem:
             message = @"error item already exists";
             break;
-            
+
         case errSecItemNotFound :
             message = @"error item not found";
             break;
-            
+
         case errSecAuthFailed:
             message = @"error item authentication failed";
             break;
-            
+
         default:
             message = [NSString stringWithFormat:@"error with OSStatus %d", status];
             break;
     }
-    
+
     return message;
 }
 
@@ -305,7 +305,7 @@ NSString *keychainStatusToString(OSStatus status) {
     CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
     NSString *uuidString = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
     CFRelease(uuid);
-    
+
     return uuidString;
 }
 

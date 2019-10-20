@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.RNECEncryption;
+package io.parity.RnecEncryption;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
@@ -26,13 +26,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RNECEncryptionPackage implements ReactPackage {
+public class RnecEncryptionPackage implements ReactPackage {
 
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
 
-        modules.add(new RNECEncryptionModule(reactContext));
+        modules.add(new RnecEncryptionModule(reactContext));
 
         return modules;
     }
