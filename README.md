@@ -20,9 +20,19 @@ Algorithm used: [ECIES_P256_HKDF_HMAC_SHA256_AES128_CTR_HMAC_SHA256](https://goo
 
 ## Getting started
 
+The library should be automatically linked on installation.
+
 `$ npm install react-native-ec-encryption --save`
 
-And it will automatically linked.
+For iOS:
+
+An extra installation step is needed on React Native 0.60(+) (see issue [#99](https://github.com/brodybits/create-react-native-module/issues/99)):
+
+```shell
+$ cd ios && pod install && cd ..
+```
+
+Tested with React Native version >=0.60
 
 ## Usage
 

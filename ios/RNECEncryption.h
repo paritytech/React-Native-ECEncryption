@@ -15,13 +15,9 @@
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Foundation/Foundation.h>
-#if __has_include("RCTBridgeModule.h")
-#import "RCTBridgeModule.h"
-#else
 #import <React/RCTBridgeModule.h>
-#endif
 
-@interface RNECEncryption : NSObject <RCTBridgeModule>
+@interface RnecEncryption : NSObject <RCTBridgeModule>
 
 - (NSString * _Nonnull) toPublicIdentifier:(NSString * _Nonnull)keyPairTag;
 - (SecKeyRef _Nullable) getPublicKeyRef:(NSString * _Nullable)publicKeyTag errMsg:(NSString *_Nullable*_Nullable)errMsg;
@@ -33,4 +29,4 @@
 - (NSData * _Nullable)decrypt:(NSDictionary* _Nonnull)options errMsg:(NSString *_Nullable*_Nullable) errMsg;
 
 @end
-  
+
